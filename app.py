@@ -12,10 +12,11 @@ class InferlessPythonModel:
         prompts = inputs["prompt"]  # Extract the prompt from the input
         result = self.llm.generate(prompts, self.sampling_params)
         # Extract the generated text from the result
-        result_output = [output.outputs[0].text for output in result]
+        generated_outputs = [output.outputs[0].text for output in results]
 
-        # Return a dictionary containing the result
-        return {'generated_result': result_output[0]}
+        if len(prompts) == 1:
+            return {'generated_result': generated_outputs[0]}
+        return {'generated_results': generated_outputs}
 
     def finalize(self):
         pass
