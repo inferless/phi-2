@@ -10,7 +10,7 @@ class InferlessPythonModel:
         
     def infer(self,inputs):
         prompts = inputs["prompt"]  # Extract the prompt from the input
-        result = self.llm.generate(prompts, self.sampling_params)
+        results = self.llm.generate(prompts, self.sampling_params)
         # Extract the generated text from the result
         generated_outputs = [output.outputs[0].text for output in results]
 
