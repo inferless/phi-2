@@ -2,87 +2,38 @@
 
 Check out [this tutorial](https://guides.inferless.com/how-to-finetune-quantize-and-inference-phi-2) which will guide you through the process of deploying a Phi-2 model using Inferless.
 
-## TL;DR - Deploy Phi-2 using Inferless:
+## TL;DR:
 - Deployment of Deploy Phi-2 model using [vLLM](https://github.com/vllm-project/vllm).
 - By using the vLLM, you can expect an average latency of 1.34 sec using an A100 GPU(80GB).
-- Dependencies defined in inferless-runtime-config.yaml.
-- GitHub/GitLab template creation with app.py and config.yaml.
-- Model class in app.py with initialize, infer, and finalize functions.
+- Dependencies defined in `inferless-runtime-config.yaml`.
+- GitHub/GitLab template creation with `app.py`, `inferless-runtime-config.yaml` and `inferless.yaml`.
+- Model class in `app.py` with `initialize`, `infer`, and `finalize` functions.
 - Custom runtime creation with necessary system and Python packages.
-- Model import via GitHub with input/output parameters in JSON.
-- Recommended GPU: NVIDIA A100 for optimal performance.
+- Model import via GitHub with `input_schema.py` file.
+- Recommended GPU: NVIDIA A100.
 - Custom runtime selection in advanced configuration.
 - Final review and deployment on the Inferless platform.
-
----
-## Prerequisites
-- **Git**. You would need git installed on your system if you wish to customize the repo after forking.
-- **Python>=3.8**. You would need Python to customize the code in the app.py according to your needs.
-- **Curl**. You would need Curl if you want to make API calls from the terminal itself.
-
----
-## Quick Tutorial on "How to Deploy" on Inferless
-Here is a quick start to help you get up and running with this template on Inferless.
-
-### Download the config and Create a runtime 
-Get started by downloading the config.yaml file and go to Inferless dashboard and create a custom runtime.
-
-Quickly add this as a Custom runtime.
 
 ### Fork the Repository
 Get started by forking the repository. You can do this by clicking on the fork button in the top right corner of the repository page.
 
 This will create a copy of the repository in your own GitHub account, allowing you to make changes and customize it according to your needs.
 
+### Create a Custom Runtime in Inferless
+To access the custom runtime window in Inferless, simply navigate to the sidebar and click on the Create new Runtime button. A pop-up will appear.
+
+Next, provide a suitable name for your custom runtime and proceed by uploading the **inferless-runtime-config.yaml** file given above. Finally, ensure you save your changes by clicking on the save button.
 
 ### Import the Model in Inferless
-Log in to your inferless account, select the workspace you want the model to be imported into and click the Add Model button.
+Log in to your inferless account, select the workspace you want the model to be imported into and click the `Add a custom model` button.
 
-Select the PyTorch as framework and choose **Repo(custom code)** as your model source and use the forked repo URL as the **Model URL**.
+- Select `Github` as the method of upload from the Provider list and then select your Github Repository and the branch.
+- Choose the type of machine, and specify the minimum and maximum number of replicas for deploying your model.
+- Configure Custom Runtime ( If you have pip or apt packages), choose Volume, Secrets and set Environment variables like Inference Timeout / Container Concurrency / Scale Down Timeout
+- Once you click “Continue,” click Deploy to start the model import process.
 
-After the create model step, while setting the configuration for the model make sure to select the appropriate runtime.
+Enter all the required details to Import your model. Refer [this link](https://docs.inferless.com/integrations/git-custom-code/git--custom-code) for more information on model import.
 
-Enter all the required details to Import your model. Refer [this link](https://docs.inferless.com/integrations/github-custom-code) for more information on model import.
-
-The following is a sample Input and Output JSON for this model which you can use while importing this model on Inferless.
-
-### Input
-```json
-{
-    "inputs": [
-      {
-        "data": [
-          "What is an AI?"
-        ],
-        "name": "prompt",
-        "shape": [
-          1
-        ],
-        "datatype": "BYTES"
-      }
-    ]
-}
-```
-
-### Output
-```json
-{
-    "outputs": [
-      {
-        "data": [
-          "data"
-        ],
-        "name": "generated_result",
-        "shape": [
-          1
-        ],
-        "datatype": "BYTES"
-      }
-    ]
-}
-```
-
----
 ## Curl Command
 Following is an example of the curl command you can use to make inferences. You can find the exact curl command on the Model's API page in Inferless.
 ```bash
